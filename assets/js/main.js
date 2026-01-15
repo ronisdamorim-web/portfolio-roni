@@ -170,17 +170,30 @@ function renderCases() {
     const casesGrid = document.getElementById('casesGrid');
     if (!casesGrid) return;
 
-    const cases = loadCases();
+    let cases = [];
 
-    casesGrid.innerHTML = cases.map((caseItem) => `
-        <a href="case.html?id=${caseItem.id}" class="case-card">
+    // 1. Tentar carregar do DB_CONTENT (site publicado)
+    if (window.DB_CONTENT && Array.isArray(window.DB_CONTENT.cases)) {
+        cases = window.DB_CONTENT.cases;
+    }
+    // 2. Fallback para loadCases global (se existir)
+    else if (typeof loadCases === 'function') {
+        cases = loadCases();
+    }
+
+    // 3. Filtrar apenas os visíveis (visible !== false)
+    // Se visible for undefined (antigos), considera true
+    const visibleCases = cases.filter(c => c.visible !== false);
+
+    casesGrid.innerHTML = visibleCases.map((caseItem) => `
+        <a href="case.html?id=${caseItem.id}" class="case-card" data-id="${caseItem.id}">
             <img src="${caseItem.coverImage}" alt="${caseItem.title}" class="case-image" loading="lazy">
             <div class="case-content">
                 <h3 class="case-title">${caseItem.title}</h3>
                 <p class="case-description">${caseItem.shortDescription}</p>
                 <div class="case-tags">
                     ${caseItem.status === 'andamento' ? '<span class="status-badge">Em andamento</span>' : ''}
-                    ${caseItem.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    ${caseItem.tags ? caseItem.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : ''}
                 </div>
             </div>
         </a>

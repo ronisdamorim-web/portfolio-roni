@@ -1,4 +1,4 @@
-// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T16:41:36.737Z)
+// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T16:44:45.136Z)
 window.DB_CONTENT = {
   "cases": [
     {
@@ -226,7 +226,8 @@ window.DB_CONTENT = {
         "solucao": "Plataforma responsiva com busca otimizada, filtros intuitivos e navegação simplificada.",
         "resultado": "Aumento significativo no engajamento e feedback positivo da comunidade."
       },
-      "galleryImages": []
+      "galleryImages": [],
+      "visible": false
     }
   ],
   "about": {
