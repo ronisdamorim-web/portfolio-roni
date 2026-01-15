@@ -581,6 +581,20 @@
             const file = input.files[0];
             if (!file) return;
 
+            // ✅ PROFILE IMAGE: Save as Base64 (to work on Vercel without external hosting)
+            if (hiddenInputId === 'aboutImage') {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64 = e.target.result;
+                    document.getElementById(hiddenInputId).value = base64;
+                    const preview = document.getElementById(previewId);
+                    preview.src = base64;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+                return; // Stop here, don't upload to server
+            }
+
             const loading = input.parentElement.querySelector('.upload-loading');
             if (loading) loading.style.display = 'block';
 
