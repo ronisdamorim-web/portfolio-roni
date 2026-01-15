@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roni Amorim | Product Designer</title>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -207,7 +209,6 @@
             transform: translateY(-10px);
             border-color: var(--accent);
         }
-
 
         .case-image {
             width: 100%;
@@ -612,21 +613,17 @@
         // Load and Render Contact
         // =====================
         function loadContact() {
-            // 1) Preferir DB publicado
             if (window.DB_CONTENT && window.DB_CONTENT.contact) {
-                const contact = window.DB_CONTENT.contact;
-                renderContact(contact);
+                renderContact(window.DB_CONTENT.contact);
                 return;
             }
 
-            // 2) Fallback LocalStorage (rascunho local)
             const stored = localStorage.getItem('portfolioContact');
             if (stored) {
                 renderContact(safeJSONParse(stored, {}));
                 return;
             }
 
-            // 3) Default
             renderContact({
                 email: 'roniamorim.ux@gmail.com',
                 linkedinUrl: 'https://www.linkedin.com/in/roni-ux/',
@@ -664,20 +661,17 @@
         // Load and Render About
         // =====================
         function loadAbout() {
-            // 1) Preferir DB publicado
             if (window.DB_CONTENT && window.DB_CONTENT.about) {
                 renderAbout(window.DB_CONTENT.about);
                 return;
             }
 
-            // 2) Fallback LocalStorage
             const stored = localStorage.getItem('portfolioAbout');
             if (stored) {
                 renderAbout(safeJSONParse(stored, {}));
                 return;
             }
 
-            // 3) Default
             renderAbout({
                 title: 'Sobre mim',
                 text: 'Sou Product Designer (UX/UI) com background em Design de Animação e experiência prática construindo soluções digitais do zero — da pesquisa ao protótipo e entrega visual.\n\nMeu foco é criar produtos com clareza, usabilidade e impacto real, equilibrando design, negócio e execução. Tenho facilidade em transformar ideias complexas em interfaces simples, testáveis e apresentáveis.',
@@ -701,11 +695,11 @@
         function loadCases() {
             let cases = [];
 
-            // 1) Preferir DB publicado
+            // ✅ 1) Preferir DB publicado do CMS
             if (window.DB_CONTENT && Array.isArray(window.DB_CONTENT.cases)) {
                 cases = window.DB_CONTENT.cases;
             }
-            // 2) Fallback LocalStorage (rascunho local)
+            // ✅ 2) Fallback LocalStorage
             else {
                 const stored = localStorage.getItem('portfolioCases');
                 if (stored) {
@@ -721,66 +715,45 @@
         }
 
         function renderCases(cases) {
-            console.log('=== RENDERIZANDO CASES ===');
-            console.log('Total de cases:', cases.length);
-            console.log('Cases completos:', JSON.stringify(cases, null, 2));
+            if (!casesGrid) return;
 
-            if (!casesGrid) {
-                console.error('casesGrid não encontrado!');
+            // Se não tiver nenhum case, mostra um texto simples (sem quebrar layout)
+            if (!cases.length) {
+                casesGrid.innerHTML = `
+                    <div style="color: var(--text-secondary); text-align:center; width:100%; padding: 2rem;">
+                        Nenhum case publicado ainda.
+                    </div>
+                `;
                 return;
             }
 
-            const cardsHTML = [];
+            casesGrid.innerHTML = cases.map((caseItem, i) => {
+                const id = String(caseItem.id || `case-${i}`).trim();
+                const title = String(caseItem.title || "Sem título");
+                const desc = String(caseItem.shortDescription || "");
+                const cover = String(caseItem.coverImage || "");
+                const tags = Array.isArray(caseItem.tags) ? caseItem.tags : [];
+                const status = String(caseItem.status || "");
 
-            for (let i = 0; i < cases.length; i++) {
-                const c = cases[i];
-                const caseId = String(c.id || '').trim() || `case-${i}`;
-                const caseTitle = String(c.title || 'Sem título');
-                const caseDesc = String(c.shortDescription || '');
-                const caseCover = String(c.coverImage || '');
-                const caseStatus = String(c.status || '');
-                const caseTags = Array.isArray(c.tags) ? c.tags : [];
-
-                const baseUrl = 'case.html';
-                const queryParam = '?id=' + encodeURIComponent(caseId);
-                const fullUrl = baseUrl + queryParam;
-
-                console.log(`[${i}] Título: "${caseTitle}" | ID: "${caseId}" | URL: "${fullUrl}"`);
-
-                let cardHTML = '<a href="' + fullUrl + '" class="case-card" data-id="' + caseId + '">';
-                cardHTML += '<img src="' + caseCover + '" alt="' + caseTitle + '" class="case-image" loading="lazy">';
-                cardHTML += '<div class="case-content">';
-                cardHTML += '<h3 class="case-title">' + caseTitle + '</h3>';
-                cardHTML += '<p class="case-description">' + caseDesc + '</p>';
-                cardHTML += '<div class="case-tags">';
-
-                if (caseStatus === 'andamento') {
-                    cardHTML += '<span class="status-badge">Em andamento</span>';
-                }
-
-                for (let j = 0; j < caseTags.length; j++) {
-                    cardHTML += '<span class="tag">' + caseTags[j] + '</span>';
-                }
-
-                cardHTML += '</div></div></a>';
-
-                cardsHTML.push(cardHTML);
-            }
-
-            casesGrid.innerHTML = cardsHTML.join('');
-            console.log('=== FIM RENDERIZAÇÃO ===');
-            console.log('HTML gerado (primeiros 500 chars):', casesGrid.innerHTML.substring(0, 500));
-
-            setTimeout(() => {
-                const caseLinks = document.querySelectorAll('.case-card');
-                console.log('=== VERIFICAÇÃO DE LINKS ===');
-                console.log('Total de cards encontrados:', caseLinks.length);
-                caseLinks.forEach((link, index) => {
-                    console.log(`Card ${index}: href="${link.href}" | data-id="${link.dataset.id}"`);
-                });
-            }, 100);
+                return `
+                    <a href="case.html?id=${encodeURIComponent(id)}" class="case-card" data-id="${id}">
+                        <img src="${cover}" alt="${title}" class="case-image" loading="lazy">
+                        <div class="case-content">
+                            <h3 class="case-title">${title}</h3>
+                            <p class="case-description">${desc}</p>
+                            <div class="case-tags">
+                                ${status === 'andamento' ? '<span class="status-badge">Em andamento</span>' : ''}
+                                ${tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    </a>
+                `;
+            }).join("");
         }
 
+        // =====================
+        // Init
+        // =====================
         loadContact();
         loadAbout();
         loadCases();
