@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roni Amorim | Product Designer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #151515;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #8b7fff;
+            --accent-light: #a99fff;
+            --border: #2a2a2a;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Starfield Background */
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 12vw, 8rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            line-height: 1;
+            position: relative;
+            display: inline-block;
+        }
+
+        .matrix-glitching {
+            color: #00ff66 !important;
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.65);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 1rem 2.5rem;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: var(--bg-primary);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scroll-arrow {
+            width: 1px;
+            height: 3rem;
+            background: linear-gradient(to bottom, transparent, var(--accent));
+            animation: scroll-pulse 2s infinite;
+        }
+
+        @keyframes scroll-pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(10px);
+            }
+        }
+
+        /* Cases Section */
+        .cases-section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .case-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .case-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+
+        .case-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        .case-content {
+            padding: 2rem;
+            pointer-events: none;
+        }
+
+        .case-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .case-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .case-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(139, 127, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-badge {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            color: #ffc107;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 8rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 3rem;
+            text-align: left;
+        }
+
+        .about-text {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            white-space: pre-wrap;
+        }
+
+        .about-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .about-meta-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .about-meta-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            min-width: 100px;
+        }
+
+        .about-meta-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 8rem 2rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 1rem 2rem;
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
+            background: var(--bg-primary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateX(10px);
+        }
+
+        .contact-link.icon-only {
+            padding: 1rem 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .contact-link.icon-only .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Starfield Background -->
+    <canvas id="starfield"></canvas>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-label">Portfólio</div>
+        <h1 class="hero-name" id="heroName" data-glitch>Roni Amorim</h1>
+        <p class="hero-subtitle">Product Designer | UX/UI | Front-end</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <a href="#cases" class="cta-button">Ver cases ↓</a>
+            <a href="#sobre" class="cta-button">Sobre mim</a>
+            <a href="#contato" class="cta-button">Contato</a>
+        </div>
+        <div class="scroll-indicator">
+            <span>Iniciar leitura</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Cases Section -->
+    <section class="cases-section" id="cases">
+        <h2 class="section-title">Projetos Selecionados</h2>
+        <div class="cases-grid" id="casesGrid"></div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="sobre">
+        <h2 class="section-title" id="aboutTitle">Sobre mim</h2>
+        <div class="about-content">
+            <p class="about-text" id="aboutText"></p>
+            <div class="about-meta">
+                <div class="about-meta-item">
+                    <span class="about-meta-label">Localização</span>
+                    <span class="about-meta-value" id="aboutLocation"></span>
+                </div>
+                <div class="about-meta-item">
+                    <span class="about-meta-label">Status</span>
+                    <span class="about-meta-value" id="aboutStatus"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contato">
+        <h2 class="contact-title">Vamos Conversar</h2>
+        <div class="contact-links">
+            <a href="mailto:roni@example.com" class="contact-link">
+                <span class="contact-icon">✉</span>
+                <span>roni@example.com</span>
+            </a>
+            <a href="https://linkedin.com/in/seu-perfil" target="_blank" class="contact-link">
+                <span class="contact-icon">in</span>
+                <span>LinkedIn</span>
+            </a>
+            <a href="https://wa.me/5511999999999" target="_blank" class="contact-link">
+                <span class="contact-icon">📱</span>
+                <span>WhatsApp</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Roni Amorim. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // =====================
+        // Starfield + Magnet Effect
+        // =====================
+        const canvas = document.getElementById("starfield");
+        const ctx = canvas.getContext("2d");
+        const isMobile = window.innerWidth < 768;
+
+        let w, h;
+        function resizeCanvas() {
+            w = canvas.width = window.innerWidth * window.devicePixelRatio;
+            h = canvas.height = window.innerHeight * window.devicePixelRatio;
+            canvas.style.width = window.innerWidth + 'px';
+            canvas.style.height = window.innerHeight + 'px';
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        const stars = [];
+        const STAR_COUNT = 120;
+
+        for (let i = 0; i < STAR_COUNT; i++) {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight;
+            stars.push({
+                ox: x, oy: y, x: x, y: y,
+                r: Math.random() * 1.2 + 0.5,
+                baseOpacity: Math.random() * 0.5 + 0.4,
+                opacity: Math.random() * 0.5 + 0.4,
+                twinkleSpeed: Math.random() * 0.005 + 0.003,
+                twinkleOffset: Math.random() * Math.PI * 2
+            });
+        }
+
+        const mouse = { x: -9999, y: -9999 };
+
+        if (!isMobile) {
+            window.addEventListener("mousemove", (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener("mouseleave", () => {
+                mouse.x = -9999;
+                mouse.y = -9999;
+            });
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+            const time = Date.now();
+
+            for (const s of stars) {
+                s.opacity = s.baseOpacity + Math.sin(time * s.twinkleSpeed + s.twinkleOffset) * 0.08;
+
+                if (!isMobile && mouse.x > -9999) {
+                    const dx = mouse.x - s.x;
+                    const dy = mouse.y - s.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const radius = 200;
+                    const strength = 0.25;
+
+                    if (dist < radius && dist > 1) {
+                        const pull = (1 - dist / radius) * strength;
+                        s.x += dx * pull;
+                        s.y += dy * pull;
+                    }
+                }
+
+                s.x += (s.ox - s.x) * 0.04;
+                s.y += (s.oy - s.y) * 0.04;
+
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
+                ctx.fill();
+            }
+
+            requestAnimationFrame(animateStars);
+        }
+
+        animateStars();
+
+        // =====================
+        // Glitch Effect with Matrix Green
+        // =====================
+        function glitch(el) {
+            if (!el.dataset.glitch) el.dataset.glitch = el.innerText;
+            const text = el.dataset.glitch;
+            const words = text.split(" ");
+            const stop = Math.max(...words.map((w) => w.length));
+            if (el.dataset.interval) clearInterval(Number(el.dataset.interval));
+            el.classList.add("matrix-glitching");
+
+            let min = 5, iterations = 0;
+            const interval = setInterval(() => {
+                el.innerText = words.map((word) => {
+                    return word.split("").map((letter, index) => {
+                        if (iterations > index + min || index > iterations) return letter;
+                        else return Math.floor(Math.random() * 10);
+                    }).join("");
+                }).join(" ");
+
+                el.dataset.interval = String(interval);
+                iterations++;
+
+                if (iterations >= stop + min) {
+                    clearInterval(Number(el.dataset.interval));
+                    el.innerText = text;
+                    el.classList.remove("matrix-glitching");
+                }
+            }, 75);
+        }
+
+        const glitchEl = document.querySelectorAll("[data-glitch]");
+        glitchEl.forEach((el) => {
+            el.addEventListener("mouseover", () => glitch(el));
+            if (window.innerWidth < 768) setTimeout(() => glitch(el), 600);
+        });
+
+        // =====================
+        // Smooth Scroll
+        // =====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // =====================
+        // Load and Render Contact
+        // =====================
+        function loadContact() {
+            const stored = localStorage.getItem('portfolioContact');
+            let contact;
+
+            if (stored) {
+                contact = JSON.parse(stored);
+            } else {
+                contact = {
+                    email: 'roniamorim.ux@gmail.com',
+                    linkedinUrl: 'https://linkedin.com/in/roni-ux',
+                    linkedinLabel: 'linkedin.com/in/roni-ux',
+                    whatsappUrl: 'https://wa.me/5511914665122',
+                    whatsappLabel: 'WhatsApp: (11) 91466-5122'
+                };
+            }
+
+            // Atualizar links de contato
+            const contactLinks = document.querySelector('.contact-links');
+            if (contactLinks) {
+                contactLinks.innerHTML = `
+                    <a href="mailto:${contact.email}" class="contact-link">
+                        <span class="contact-icon">✉</span>
+                        <span>${contact.email}</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/roni-ux/" target="_blank" class="contact-link icon-only" title="LinkedIn">
+                        <span class="contact-icon">in</span>
+                    </a>
+                    <a href="https://wa.me/5511914665122" target="_blank" class="contact-link icon-only" title="WhatsApp">
+                        <span class="contact-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                            </svg>
+                        </span>
+                    </a>
+                `;
+            }
+        }
+
+        // =====================
+        // Load and Render About
+        // =====================
+        function loadAbout() {
+            const stored = localStorage.getItem('portfolioAbout');
+            let about;
+
+            if (stored) {
+                about = JSON.parse(stored);
+            } else {
+                about = {
+                    title: 'Sobre mim',
+                    text: 'Sou Product Designer (UX/UI) com background em Design de Animação e experiência prática construindo soluções digitais do zero — da pesquisa ao protótipo e entrega visual.\n\nMeu foco é criar produtos com clareza, usabilidade e impacto real, equilibrando design, negócio e execução. Tenho facilidade em transformar ideias complexas em interfaces simples, testáveis e apresentáveis.',
+                    location: 'São Paulo — SP',
+                    status: 'Aberto a oportunidades em UX/UI e Product Design'
+                };
+                localStorage.setItem('portfolioAbout', JSON.stringify(about));
+            }
+
+            document.getElementById('aboutTitle').textContent = about.title;
+            document.getElementById('aboutText').textContent = about.text;
+            document.getElementById('aboutLocation').textContent = about.location;
+            document.getElementById('aboutStatus').textContent = about.status;
+        }
+
+        // =====================
+        // Load and Render Cases
+        // =====================
+        const casesGrid = document.getElementById('casesGrid');
+
+        function loadCases() {
+            const stored = localStorage.getItem('portfolioCases');
+            let cases = [];
+
+            if (stored) {
+                try {
+                    cases = JSON.parse(stored);
+                } catch (e) {
+                    console.error('Erro ao processar JSON:', e);
+                    cases = [];
+                }
+            } else {
+                cases = [
+                    {
+                        id: 'fadelito-flow',
+                        title: 'Fadelito Flow',
+                        coverImage: 'https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&h=500&fit=crop',
+                        shortDescription: 'Redesign completo do fluxo de compra, focando em conversão e experiência do usuário.',
+                        tags: ['UX/UI', 'Research', 'Prototyping'],
+                        status: 'concluido',
+                        subtitle: 'E-commerce optimization project',
+                        sections: {
+                            context: 'A Fadelito enfrentava uma taxa de abandono de carrinho de 68%, significativamente acima da média do mercado.',
+                            problem: 'Formulário de checkout com 12 campos obrigatórios e falta de feedback visual durante o processamento.',
+                            objective: 'Redesenhar o fluxo completo, desde a adição de produtos até a confirmação do pedido.',
+                            process: 'Realizei 15 entrevistas com usuários, analisei heatmaps e criei protótipos iterativos.',
+                            solution: 'Redução de campos, indicador de progresso, feedback visual em tempo real.',
+                            result: '42% de redução no abandono de carrinho e 3.2x aumento na conversão mobile.'
+                        },
+                        gallery: []
+                    },
+                    {
+                        id: 'classificados-memorial',
+                        title: 'Classificados Memorial',
+                        coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop',
+                        shortDescription: 'Plataforma de classificados moderna com foco em usabilidade e acessibilidade.',
+                        tags: ['UX/UI', 'Front-end', 'Design System'],
+                        status: 'concluido',
+                        subtitle: 'Modern classified ads platform',
+                        sections: { context: '', problem: '', objective: '', process: '', solution: '', result: '' },
+                        gallery: []
+                    },
+                    {
+                        id: 'mape',
+                        title: 'MAPE',
+                        coverImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop',
+                        shortDescription: 'Sistema de gestão educacional com interface intuitiva para professores e alunos.',
+                        tags: ['Product Design', 'UX Research'],
+                        status: 'andamento',
+                        subtitle: 'Educational management system',
+                        sections: { context: '', problem: '', objective: '', process: '', solution: '', result: '' },
+                        gallery: []
+                    }
+                ];
+                localStorage.setItem('portfolioCases', JSON.stringify(cases));
+            }
+
+            // Filter hidden cases (visible !== false)
+            const visibleCases = cases.filter(c => c.visible !== false);
+            renderCases(visibleCases);
+        }
+
+        function renderCases(cases) {
+            console.log('=== RENDERIZANDO CASES ===');
+            console.log('Total de cases:', cases.length);
+            console.log('Cases completos:', JSON.stringify(cases, null, 2));
+
+            if (!casesGrid) {
+                console.error('casesGrid não encontrado!');
+                return;
+            }
+
+            const cardsHTML = [];
+
+            for (let i = 0; i < cases.length; i++) {
+                const c = cases[i];
+                const caseId = String(c.id || '').trim() || `case-${i}`;
+                const caseTitle = String(c.title || 'Sem título');
+                const caseDesc = String(c.shortDescription || '');
+                const caseCover = String(c.coverImage || '');
+                const caseStatus = String(c.status || '');
+                const caseTags = Array.isArray(c.tags) ? c.tags : [];
+
+                // Construir URL manualmente
+                const baseUrl = 'case.html';
+                const queryParam = '?id=' + encodeURIComponent(caseId);
+                const fullUrl = baseUrl + queryParam;
+
+                console.log(`[${i}] Título: "${caseTitle}" | ID: "${caseId}" | URL: "${fullUrl}"`);
+
+                // Construir HTML do card
+                let cardHTML = '<a href="' + fullUrl + '" class="case-card" data-id="' + caseId + '">';
+                cardHTML += '<img src="' + caseCover + '" alt="' + caseTitle + '" class="case-image">';
+                cardHTML += '<div class="case-content">';
+                cardHTML += '<h3 class="case-title">' + caseTitle + '</h3>';
+                cardHTML += '<p class="case-description">' + caseDesc + '</p>';
+                cardHTML += '<div class="case-tags">';
+
+                if (caseStatus === 'andamento') {
+                    cardHTML += '<span class="status-badge">Em andamento</span>';
+                }
+
+                for (let j = 0; j < caseTags.length; j++) {
+                    cardHTML += '<span class="tag">' + caseTags[j] + '</span>';
+                }
+
+                cardHTML += '</div></div></a>';
+
+                cardsHTML.push(cardHTML);
+            }
+
+            casesGrid.innerHTML = cardsHTML.join('');
+            console.log('=== FIM RENDERIZAÇÃO ===');
+            console.log('HTML gerado (primeiros 500 chars):', casesGrid.innerHTML.substring(0, 500));
+
+            // Verificar links gerados
+            setTimeout(() => {
+                const caseLinks = document.querySelectorAll('.case-card');
+                console.log('=== VERIFICAÇÃO DE LINKS ===');
+                console.log('Total de cards encontrados:', caseLinks.length);
+                caseLinks.forEach((link, index) => {
+                    console.log(`Card ${index}: href="${link.href}" | data-id="${link.dataset.id}"`);
+                });
+
+                // Adicionar click listener para garantir redirecionamento correto
+                caseLinks.forEach((card) => {
+                    card.addEventListener('click', function (e) {
+                        e.preventDefault(); // Impede qualquer navegação padrão
+                        const caseId = this.dataset.id;
+                        if (caseId) {
+                            // Força navegação via Hash
+                            const targetUrl = 'case.html#' + encodeURIComponent(caseId);
+                            console.log('Navegando via Hash para:', targetUrl);
+                            window.location.href = targetUrl;
+                        } else {
+                            console.error('Erro: Card sem data-id:', this);
+                        }
+                    });
+                });
+                console.log('✅ Click listeners adicionados aos cards');
+            }, 100);
+        }
+
+        loadContact();
+        loadAbout();
+        loadCases();
+    </script>
+</body>
+
+</html>
