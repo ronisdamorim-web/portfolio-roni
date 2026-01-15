@@ -446,6 +446,13 @@
                 <textarea id="result"></textarea>
             </div>
 
+            <div class="form-group">
+                <label>07. Próximos Passos</label>
+                <input type="text" id="nextStepsSubtitle" placeholder="Subtítulo H3 (Ex: Evolução planejada)"
+                    class="mb-05">
+                <textarea id="nextSteps"></textarea>
+            </div>
+
             <h3 class="section-title">Galeria</h3>
             <div id="galleryItems" class="gallery-items"></div>
             <button type="button" class="btn btn-secondary" onclick="addGalleryItem()">+ Adicionar Imagem</button>
@@ -789,6 +796,10 @@
                     result: {
                         content: document.getElementById('result').value,
                         subtitle: document.getElementById('resultSubtitle').value
+                    },
+                    nextSteps: {
+                        content: document.getElementById('nextSteps').value,
+                        subtitle: document.getElementById('nextStepsSubtitle').value
                     }
                 },
                 gallery: currentGallery.filter(item => item.url)
@@ -862,7 +873,7 @@
             renderTags();
 
             if (c.sections) {
-                const fields = ['context', 'problem', 'objective', 'process', 'solution', 'result'];
+                const fields = ['context', 'problem', 'objective', 'process', 'solution', 'result', 'nextSteps'];
                 fields.forEach(field => {
                     const sectionData = c.sections[field];
 
