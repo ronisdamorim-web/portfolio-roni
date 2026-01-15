@@ -370,6 +370,7 @@
             color: var(--text-primary);
         }
     </style>
+    <script src="assets/js/db.js"></script>
 </head>
 
 <body>
@@ -473,6 +474,9 @@
 
             // Debug: Mostrar Info se falhar ou se estiver em localhost
             if (!caseData) {
+                console.error(`Case não encontrado: ${caseId}`);
+                showNotFound(caseId);
+                return;
             }
 
             renderCase(caseData);

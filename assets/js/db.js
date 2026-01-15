@@ -1,4 +1,4 @@
-// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T18:32:58.717Z)
+// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T18:42:41.410Z)
 window.DB_CONTENT = {
   "cases": [
     {
@@ -129,7 +129,7 @@ window.DB_CONTENT = {
           "caption": ""
         }
       ],
-      "visible": false
+      "visible": true
     },
     {
       "id": "mape",
