@@ -448,30 +448,31 @@
 
         function loadCase() {
             const caseId = getCaseId();
-            console.log('URL Case ID:', caseId); // Debug
+            let caseData = null;
+            let source = "";
 
-            const stored = localStorage.getItem('portfolioCases');
-            console.log('localStorage existe?', !!stored); // Debug
-
-            if (!stored || !caseId) {
-                console.log('Erro: localStorage ou caseId não existe'); // Debug
-                showNotFound();
-                return;
+            // 1. Tentar LocalStorage (Edição Local)
+            try {
+                const stored = localStorage.getItem('portfolioCases');
+                if (stored) {
+                    const localCases = JSON.parse(stored);
+                    if (Array.isArray(localCases)) {
+                        caseData = localCases.find(c => c.id === caseId);
+                        if (caseData) source = "LocalStorage";
+                    }
+                }
+            } catch (e) {
+                console.error("Erro ao ler LocalStorage", e);
             }
 
-            const cases = JSON.parse(stored);
-            console.log('Todos os cases:', cases); // Debug
-            console.log('Procurando case com ID:', caseId); // Debug
+            // 2. Se não achou no Storage, tentar DB_CONTENT (Oficial/Publicado)
+            if (!caseData && window.DB_CONTENT && window.DB_CONTENT.cases) {
+                caseData = window.DB_CONTENT.cases.find(c => c.id === caseId);
+                if (caseData) source = "DB_CONTENT";
+            }
 
-            const caseData = cases.find(c => c.id === caseId);
-            console.log('Case encontrado?', !!caseData); // Debug
-            console.log('Dados do case:', caseData); // Debug
-
+            // Debug: Mostrar Info se falhar ou se estiver em localhost
             if (!caseData) {
-                console.log('Case não encontrado com ID:', caseId); // Debug
-                console.log('IDs disponíveis:', cases.map(c => c.id)); // Debug
-                showNotFound();
-                return;
             }
 
             renderCase(caseData);
