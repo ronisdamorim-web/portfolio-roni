@@ -695,23 +695,46 @@
         function loadCases() {
             let cases = [];
 
-            // ✅ 1) Preferir DB publicado do CMS
+            console.log('🔍 Iniciando carregamento de cases...');
+
+            // ✅ 1) Preferir DB publicado do CMS (Assets oficial)
             if (window.DB_CONTENT && Array.isArray(window.DB_CONTENT.cases)) {
                 cases = window.DB_CONTENT.cases;
+                console.log(`📂 DB_CONTENT carregado: ${cases.length} cases encontrados.`);
             }
-            // ✅ 2) Fallback LocalStorage
+            // ✅ 2) Fallback LocalStorage (Preview / Dev)
             else {
                 const stored = localStorage.getItem('portfolioCases');
                 if (stored) {
                     cases = safeJSONParse(stored, []);
+                    console.log(`💾 LocalStorage carregado: ${cases.length} cases encontrados.`);
                 } else {
                     cases = [];
+                    console.log('⚠️ Nenhum case encontrado no DB ou LocalStorage.');
                 }
             }
 
-            // ✅ Filtrar invisíveis
-            const visibleCases = cases.filter(c => c.visible !== false);
+            // ✅ Debug dados brutos (primeiro case)
+            if (cases.length > 0) {
+                console.log('📋 Exemplo de dados do case [0]:', cases[0]);
+            }
+
+            // ✅ Filtrar invisíveis (Regra Robusta)
+            const visibleCases = cases.filter(c => {
+                // O case é visível se:
+                // 1. visible NÃO for false (undefined ou true = ok)
+                // 2. hidden NÃO for true (undefined ou false = ok)
+                // 3. status NÃO for 'oculto'
+                const isVisible = c.visible !== false && c.hidden !== true && c.status !== 'oculto';
+                return isVisible;
+            });
+
+            console.log(`👀 Cases visíveis após filtro: ${visibleCases.length}`);
+            console.log('🚀 Renderizando...');
+
             renderCases(visibleCases);
+
+            console.log(`✅ Renderizados: ${visibleCases.length}`);
         }
 
         function renderCases(cases) {

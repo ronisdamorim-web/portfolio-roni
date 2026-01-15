@@ -181,9 +181,10 @@ function renderCases() {
         cases = loadCases();
     }
 
-    // 3. Filtrar apenas os visíveis (visible !== false)
-    // Se visible for undefined (antigos), considera true
-    const visibleCases = cases.filter(c => c.visible !== false);
+    // 3. Filtrar apenas os visíveis (Regra Robusta)
+    const visibleCases = cases.filter(c => {
+        return c.visible !== false && c.hidden !== true && c.status !== 'oculto';
+    });
 
     casesGrid.innerHTML = visibleCases.map((caseItem) => `
         <a href="case.html?id=${caseItem.id}" class="case-card" data-id="${caseItem.id}">

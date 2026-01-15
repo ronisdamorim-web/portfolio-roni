@@ -1,4 +1,4 @@
-// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T16:44:45.136Z)
+// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T17:53:32.007Z)
 window.DB_CONTENT = {
   "cases": [
     {
@@ -68,7 +68,7 @@ window.DB_CONTENT = {
           "caption": ""
         }
       ],
-      "visible": false
+      "visible": true
     },
     {
       "id": "fadelitoflow",
@@ -129,7 +129,7 @@ window.DB_CONTENT = {
           "caption": ""
         }
       ],
-      "visible": false
+      "visible": true
     },
     {
       "id": "mape",
