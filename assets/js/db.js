@@ -1,4 +1,4 @@
-// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T18:42:41.410Z)
+// Banco de dados oficial do site (gerado pelo CMS em 2026-01-15T18:44:27.015Z)
 window.DB_CONTENT = {
   "cases": [
     {
